@@ -21,20 +21,54 @@ namespace Delegate1
                 cities[i] = names[rnd.Next(0, names.Length)].Trim();
             }
 
-            WriteLists(numbers, cities);
+            //WriteLists(numbers, cities);
             #endregion
 
             #region Exercises 1-4
             Console.WriteLine("Delegates I Exercises");
-            Array.ForEach(numbers, WriteInt);
-            #endregion
+            Array.ForEach<int>(numbers, Write<int>);
+            Array.ForEach<string>(cities, Write<string>);
 
+
+            #endregion
+            
             #region Exercises 5-6
-            Console.WriteLine("\nDelegates II Exercises");
+            Console.WriteLine("\nDelegates II Exercises\n");
+
+            var evenNumbers = Array.FindAll(numbers, FindEven);
+            foreach (var evenNumber in evenNumbers)
+            {
+                Console.WriteLine($"{evenNumber, -15}");
+            }
+
+            //Array.FindAll(cities, FindCityLength);
+            string[] longCities = Array.FindAll(cities, FindCityLength);
+            Console.WriteLine("Cities with more than 6 letters:  \n");
+            foreach (string sixLetters in cities) 
+            {
+                Console.WriteLine(sixLetters);
+            }
+            //Array.ForEach<string>(longCities, Write<string>);
+            
+
+
             #endregion
 
             #region Exercises 7-8
-            Console.WriteLine("\nDelegates III Exercises");
+            Console.WriteLine("\nDelegates III Exercises\n");
+
+            Array.FindAll(numbers, FindNumberOver500);
+            Console.WriteLine("Numbers over 500: ");
+            int[] overFiveHundred = Array.FindAll(numbers, FindNumberOver500);
+            foreach (var largeNumbers in overFiveHundred) 
+            {
+                Console.WriteLine($"{largeNumbers, -20}");
+            }
+
+            Console.WriteLine("The last city with eight letters:\n ");
+            string lastCity = Array.FindLast(cities, FindLastCity);
+            Console.WriteLine(lastCity);
+           
             #endregion
         }
 
@@ -54,16 +88,40 @@ namespace Delegate1
         #endregion
 
         #region Exercises 1-4
-        static void WriteInt(int i)
+        //static void WriteInt(int i)
+        //{
+        //    Console.Write($"{i,-8}");
+        //}
+        //static void WriteString(string s) 
+        //{
+        //    Console.Write($"{s, -20}");
+        //}
+
+        static void Write<T>(T i)
         {
-            Console.Write($"{i,-8}");
+            Console.Write($"{i, -20}");
         }
         #endregion
 
         #region Exercises 5-6
+
+        static bool FindEven(int i) 
+        {
+            if (i % 2 == 0) 
+            {
+                return true;
+            }
+            return false;
+        }
+        static bool FindCityLength(string city) => city.Length > 6;
+
+
         #endregion
 
         #region Exercises 7-8
+        static bool FindNumberOver500(int number) => number > 500;
+
+        static bool FindLastCity(string city) => city.Length > 8;
         #endregion
 
     }
